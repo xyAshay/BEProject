@@ -14,6 +14,10 @@ contract VotingSystem{
         candidates[candidateCount] = Candidate(candidateCount, _name, 0);
     }
 
+    function vote(uint _candidateID) public{
+        candidates[_candidateID].voteCount++;
+    }
+
     constructor() public{
         addCandidate("Agrey");
         addCandidate("Ashay");
