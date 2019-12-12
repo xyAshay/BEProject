@@ -6,6 +6,7 @@ contract VotingSystem{
         string name;
         uint voteCount;
     }
+    mapping(address => bool) public voters;
     mapping(uint => Candidate) public candidates;
     uint public candidateCount;
 
@@ -15,6 +16,12 @@ contract VotingSystem{
     }
 
     function vote(uint _candidateID) public{
+        //Ensure Valid Candidate ID
+        require(_candidateID > 0 && _candidateID <= candidateCount,"Invalid Candidate ID");
+        //Ensure Voter Has Not Voted Before
+        require(!voters[msg.sender],"Voter has already voted!");
+
+        voters[msg.sender] = true;
         candidates[_candidateID].voteCount++;
     }
 
