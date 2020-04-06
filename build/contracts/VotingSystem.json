@@ -2721,12 +2721,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x5c3F5a2BF78514c5313E703999c9dbd5bD211389",
-      "transactionHash": "0x0cd4a7654e348b851d183e01f6cd7ed9ba01231efe64b07ec0f0a40113674e40"
+      "address": "0xEFB48b297568BD6f8C6585101796BDabf469131A",
+      "transactionHash": "0x8c4dbc99b42d1ad17b93f065c9e82277620b85f2b318ba0662f3970751c5d3cc"
     }
   },
   "schemaVersion": "3.0.19",
-  "updatedAt": "2019-12-12T04:25:12.176Z",
+  "updatedAt": "2020-04-03T05:37:51.540Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}
