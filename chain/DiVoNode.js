@@ -52,10 +52,12 @@ const p2pNode = function(_port) {
 
     const processBlock = (_block) => {
         const current = Nexa.chain.slice(-1)[0];
-        if(current.timestamp > _block.timestamp)
-            console.log(`New Block Is Older`);
-        else
-            console.log(`Current Block Is Older`);
+        if(current.previousHash == '-1' && _block.previousHash == '-1'){
+            if(current.timestamp > _block.timestamp){
+                console.log(`UPDATING GENESIS`);
+                Nexa.chain[0] = _block;
+            }
+        }
     }
 
     const processChain = (_chain) => {
@@ -81,8 +83,8 @@ const p2pNode = function(_port) {
     const initConnection = (connection) => {
         console.log('Initiating Connection...');
         startListener(connection);
-        // requestLatestBlock(connection);
-        connection.send(JSON.stringify({event : 'CHAIN', message : Nexa.chain}));
+        requestLatestBlock(connection);
+        // connection.send(JSON.stringify({event : 'CHAIN', message : Nexa.chain}));
         p2pNodes.push(connection);
 
         connection.on('error', () => closeConnection(connection));
