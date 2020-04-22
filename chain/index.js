@@ -20,7 +20,7 @@ app.get('/chain',(req,res) => {
 app.post('/vote',(req,res) => {
     const {sender, toID} = req.body;
     const _vote = new Vote(Date.now(), sender, toID);
-    Nexa.addPending(_vote);
+    thisNode.addPending(_vote);
     res.json({message:"Added to Pending"});
 });
 
@@ -46,6 +46,7 @@ app.listen(http_port,() => {
     
     setInterval(() => {
         // Nexa.createNewBlock();
+        thisNode.createBlock();
         console.log(`Mining Iteration Complete...`);
-    }, 30000);
+    }, 60000);
 });

@@ -27,6 +27,12 @@ const p2pNode = function(_port) {
         p2pNodes.splice(p2pNodes.indexOf(connection),1);
     }
 
+    const broadcastMessage = (event, message) => {
+        p2pNodes.forEach(node => {
+            node.send(JSON.stringify({ event, message }));
+        });
+    }
+
     const startListener = (connection) => {
         connection.on('message', (data) => {
             const msg = JSON.parse(data);
@@ -58,17 +64,25 @@ const p2pNode = function(_port) {
                 Nexa.chain[0] = _block;
             }
         }
+        else{
+            if(_block.previousHash == current.hash){
+                console.log(`Adding Block To The Chain...`);
+                Nexa.chain.push(_block);
+                console.log(_block);
+            }
+            else{
+                // console.log(`Requesting Chain`);
+                broadcastMessage('REQUEST_CHAIN','');
+            }
+        }
     }
 
     const processChain = (_chain) => {
         const newChain = _chain;
-        if(Nexa.chain.length < newChain.length){
-            console.log(`New Chain Is Larger`);
+        if(newChain.length > Nexa.chain.length){
+            console.log(`REPLACING CHAIN`);
             Nexa.chain = _chain;
-        }
-        if(Nexa.chain[0].timestamp > newChain[0].timestamp){
-            console.log(`New Chain Is Older`);
-            Nexa.chain = _chain;
+            console.log(_chain);
         }
     }
 
@@ -79,6 +93,16 @@ const p2pNode = function(_port) {
     const getChain = () => {
         return Nexa.chain;
     }
+
+    const addPending = (_transaction) => {
+        Nexa.addPending(_transaction);
+    }
+
+    const createBlock = () => {
+        Nexa.createNewBlock();
+        broadcastMessage('BLOCK',Nexa.chain.slice(-1)[0]);
+    }
+    
 
     const initConnection = (connection) => {
         console.log('Initiating Connection...');
@@ -94,7 +118,9 @@ const p2pNode = function(_port) {
     return{
         init,
         addPeer,
-        getChain
+        getChain,
+        addPending,
+        createBlock
     }
 }
 
