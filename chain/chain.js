@@ -36,9 +36,10 @@ class Blockchain{
         return this.chain[this.chain.length - 1].hash;
     }
     
-    createNewBlock(){
+    createNewBlock(_NodeID){
         if(this.pendingTransactions.length > 0){
             const newBlock = new Block(Date.now(),this.pendingTransactions,this.lastestHash());
+            newBlock.creator = _NodeID;
             console.log(`Adding New Block...`);
             this.addBlock(newBlock);
             this.pendingTransactions = [];

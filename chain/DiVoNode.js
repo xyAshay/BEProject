@@ -66,9 +66,10 @@ const p2pNode = function(_port) {
         }
         else{
             if(_block.previousHash == current.hash){
-                console.log(`Adding Block To The Chain...`);
+                // console.log(`Adding Block To The Chain...`);
+                console.log(`Recieved New Block From [${_block.creator}]`);
                 Nexa.chain.push(_block);
-                console.log(_block);
+                // console.log(_block);
             }
             else{
                 // console.log(`Requesting Chain`);
@@ -98,8 +99,8 @@ const p2pNode = function(_port) {
         Nexa.addPending(_transaction);
     }
 
-    const createBlock = () => {
-        Nexa.createNewBlock();
+    const createBlock = (_NodeID) => {
+        Nexa.createNewBlock(_NodeID);
         broadcastMessage('BLOCK',Nexa.chain.slice(-1)[0]);
     }
     

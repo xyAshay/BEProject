@@ -46,7 +46,7 @@ app.listen(http_port,() => {
     
     setInterval(() => {
         // Nexa.createNewBlock();
-        thisNode.createBlock();
+        thisNode.createBlock(NodeID);
         console.log(`Mining Iteration Complete...`);
     }, 60000);
 });
