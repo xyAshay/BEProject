@@ -1,4 +1,5 @@
-const app = require('express')();
+const express = require('express');
+const app = express();
 const axios = require('axios');
 const bodyParser = require('body-parser');
 
@@ -13,6 +14,13 @@ const thisNode = new p2pNode(NodeID);
 thisNode.init();
 
 app.use(bodyParser.json());
+app.engine('html', require('ejs').renderFile);
+app.use(express.static("public"));
+
+app.get('/',(req,res) => {
+	res.render(__dirname+"/views/index.html", {nodeID:NodeID});
+});
+
 app.get('/chain',(req,res) => {
     res.json(thisNode.getChain());
 });
