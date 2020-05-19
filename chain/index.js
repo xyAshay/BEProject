@@ -41,7 +41,8 @@ function getPorts() {
 const http_port = 3000 + Math.floor(Math.random() * 101);
 app.listen(http_port,() => {
     // console.log(`Server Running On Port : 5000`);
-    console.log(`HTTP Port : ${http_port}\nNode ID : ${NodeID}`)
+    // console.log(`HTTP Port : ${http_port}\nNode ID : ${NodeID}`)
+    console.log(`Application Running \nNodeID : ${NodeID} \nGoto : http://localhost:${http_port}`)
 
     getPorts().then(data => {
         for (const port of data) {
