@@ -1,13 +1,27 @@
 $(document).ready(() => {
+    let flag = 0;
     $('.votebtns').prop('disabled',true);
     $('#sender').on('click', (e) => {
         e.preventDefault();
+        vids = [];
         if($('#voterID').length && $('#voterID').val().length){
-            $('#activity').html("Active");
-            $('#activity').css({'color' : 'green'})
-            $('#voterID').prop('disabled',true);
-            $('.votebtns').prop('disabled',false);
-            $('#status').html('<br>Voter ID '+$('#voterID').val() + ' is allowed to vote');  
+            $.get(window.location.origin+'/chain',(blocks) => {
+                for(let i=1;i<blocks.length;i++){
+                    blocks[i].data.forEach(vote => {
+                        vids.push(vote.sender);
+                    });
+                }
+                if(!vids.includes($('#voterID').val())){
+                   $('#status').html('<br>Voter ID '+$('#voterID').val() + ' is ALLOWED to vote');   
+                    $('#activity').html("Active");
+                    $('#activity').css({'color' : 'green'})
+                    $('#voterID').prop('disabled',true);
+                    $('.votebtns').prop('disabled',false);
+                }
+                else{
+                   $('#status').html('<br>Voter ID '+$('#voterID').val() + ' is NOT allowed to vote');   
+                }
+            });
         }
         else
             alert("Voter ID Empty");
