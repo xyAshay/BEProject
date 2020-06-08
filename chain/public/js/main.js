@@ -12,14 +12,18 @@ $(document).ready(() => {
                     });
                 }
                 if(!vids.includes($('#voterID').val())){
-                   $('#status').html('<br>Voter ID '+$('#voterID').val() + ' is ALLOWED to vote');   
+                    $('#status').html('<br>Voter ID '+$('#voterID').val() + ' is ALLOWED to vote');
+                    $('#status').css({'color' : 'green', 'font-size':'20px', 'font' : 'Bold'});      
                     $('#activity').html("Active");
-                    $('#activity').css({'color' : 'green'})
+                    $('#activity').css({'color' : 'green'});
+                    $('.votebtns').removeClass('btn-light');
+                    $('.votebtns').addClass('btn-success');
                     $('#voterID').prop('disabled',true);
                     $('.votebtns').prop('disabled',false);
                 }
                 else{
-                   $('#status').html('<br>Voter ID '+$('#voterID').val() + ' is NOT allowed to vote');   
+                   $('#status').html('<br>Voter ID '+$('#voterID').val() + ' is NOT allowed to vote');
+                   $('#status').css({'color' : 'red', 'font-size':'20px', 'font' : 'Bold'});  
                 }
             });
         }
@@ -29,6 +33,7 @@ $(document).ready(() => {
 
     $('.votebtns').on('click', function() {
         let xid = this.id;
+        let name = $(this).attr("data-cand-name");
         if($('#voterID').length){
             $.ajax({
                 type: 'POST',
@@ -37,7 +42,7 @@ $(document).ready(() => {
                 dataType: "json",
                 data: JSON.stringify({"sender":$('#voterID').val(),"toID":xid}),
                 success: function(){
-                    alert('You Voted For ['+xid+']');
+                    alert('You Voted For ['+name+']');
                     window.location.reload();
                 }
             });
