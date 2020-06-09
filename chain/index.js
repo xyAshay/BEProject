@@ -50,7 +50,7 @@ app.listen(http_port,() => {
             thisNode.addPeer('localhost',port);
         }
     });
-    
+   
     axios.post(`http://localhost:5000/announce/${NodeID}`);
     
     setInterval(() => {
