@@ -1,5 +1,7 @@
 <h3 align='center'>Blockchain Based Decentralized Voting System</h3>
 
+<h4 align="center"> https://www.irjet.net/archives/V7/i8/IRJET-V7I8765.pdf </h4>
+
 ---
 
 ### Overview :
